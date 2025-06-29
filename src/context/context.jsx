@@ -1,19 +1,43 @@
-import { createContext } from "react";
-import runChat from "../config/brainix"
+import { createContext, use, useState } from "react";
+import runChat from "../config/brainix";
 
 export const Context = createContext();
 
 const ContextProvider = (props) => {
 
-  const onSent = async (prompt) => {
-    await runChat(prompt) 
-  }
+  const [input,setInput] =useState("");
+  const [recentPrompt,setRecentPrompt] =useState("");
+  const [prevPrompts,setPrevPrompts] = useState([]);
+  const [showResult,setShowResult] = useState(false);
+  const [loading,setLoading] = useState(false);
+  const [resultData,setResultData] = useState("");
 
-  onSent("What is react js")
+
+  const onSent = async (prompt) => {
+
+    setResultData("")
+    setLoading(true)
+    setShowResult(true)
+    setRecentPrompt(input)
+    const response = await runChat(input)
+    setResultData(response)
+    setLoading(false)
+    setInput("")
+  
+  }
 
   const contextValue = {
-
-  }
+    prevPrompts,
+    setPrevPrompts,
+    onSent,
+    setRecentPrompt,
+    recentPrompt,
+    showResult,
+    loading,
+    resultData,
+    input,
+    setInput
+  };
 
   return(
     <Context.Provider value={contextValue}>
@@ -22,4 +46,4 @@ const ContextProvider = (props) => {
   )
 }
 
-export default ContextProvider
+export default ContextProvider;

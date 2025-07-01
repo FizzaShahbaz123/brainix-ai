@@ -24,12 +24,15 @@
   margin:auto;
 }
 
+.app-logo{
+  cursor:pointer;
+}
+
 .main .greet{
   margin:20px 0px;
-  font-size:52px;
+  font-size:48px;
   color:#c4c7c5;
   font-weight:500;
-  padding:20px;
 }
 
 .main .greet span{
@@ -193,5 +196,14 @@
   }
   .search-box div{
     gap:5px;
+  }
+}
+
+@media (max-width:450px) {
+  .cards{
+    display: none;
+  }
+  .card{
+    display: none;
   }
 }

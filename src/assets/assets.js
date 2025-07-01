@@ -14,6 +14,7 @@ import code_icon from './code_icon.png'
 import send_icon from './send_icon.png'
 import gemini_icon from './gemini_icon.png'
 import bubble_icon from './bubble_icon.png'
+import brightness_icon from './brightness_icon.png'
 
 export const assets = {
     history_icon,
@@ -31,5 +32,6 @@ export const assets = {
     code_icon,
     send_icon,
     gemini_icon,
-    bubble_icon
+    bubble_icon,
+    brightness_icon
 }

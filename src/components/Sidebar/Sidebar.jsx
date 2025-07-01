@@ -1,9 +1,25 @@
-import React,{useContext, useState} from 'react'
+import React,{useContext, useState,useEffect} from 'react'
 import './sidebar.css'
 import {assets} from '../../assets/assets.js'
 import { Context } from '../../context/context.jsx';
 
 const Sidebar = () => {
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", !darkMode ? "dark" : "light");
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setDarkMode(true);
+      document.body.classList.add("dark-mode");
+    }
+  }, []);
 
   const [extended,setExtended] = useState(false);
   const {onSent,prevPrompts,setRecentPrompt,newChat} = useContext(Context)
@@ -41,7 +57,7 @@ const Sidebar = () => {
           <img src={assets.question_icon} alt="" />
           {extended?<p>Help</p>:null}
         </div>
-        <div className="bottom-item recent-entry theme-button">
+        <div onClick={toggleTheme} className="bottom-item recent-entry theme-button">
           <img src={assets.brightness_icon} alt="" />
           {extended?<p>Theme</p>:null}
         </div>

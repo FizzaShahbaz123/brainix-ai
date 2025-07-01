@@ -207,3 +207,39 @@
     display: none;
   }
 }
+
+/* === DARK MODE === */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .main,
+body.dark-mode .search-box,
+body.dark-mode .main .card,
+body.dark-mode .sidebar,
+body.dark-mode .new-chat,
+body.dark-mode .recent-entry {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .main .card:hover,
+body.dark-mode .recent-entry:hover {
+  background-color: #333333 !important;
+}
+
+body.dark-mode .main .greet span {
+  background: -webkit-linear-gradient(16deg, #8ab4f8, #f28b82);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body,
+.sidebar,
+.main,
+.search-box,
+.new-chat,
+.recent-entry {
+  transition: background-color 0.3s, color 0.3s;
+}

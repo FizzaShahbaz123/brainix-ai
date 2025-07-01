@@ -15,6 +15,13 @@ import send_icon from './send_icon.png'
 import gemini_icon from './gemini_icon.png'
 import bubble_icon from './bubble_icon.png'
 import brightness_icon from './brightness_icon.png'
+import brightness_white_icon from './brightness_white_icon.png'
+import menu_white_icon from './menu_white_icon.png'
+import gallery_white from './gallery_white.png'
+import mic_white from './mic_white.png'
+import msg_white from './msg_white.png'
+import question_white from './question_white.png'
+import send_white from './send_white.png'
 
 export const assets = {
     history_icon,
@@ -33,5 +40,12 @@ export const assets = {
     send_icon,
     gemini_icon,
     bubble_icon,
-    brightness_icon
+    brightness_icon,
+    brightness_white_icon,
+    menu_white_icon,
+    gallery_white,
+    mic_white,
+    msg_white,
+    question_white,
+    send_white
 }

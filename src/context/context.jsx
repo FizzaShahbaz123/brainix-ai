@@ -3,6 +3,19 @@ import runChat from "../config/brainix";
 
 export const Context = createContext();
 
+function formatResponseText(text) {
+  return text
+  .replace(/```(?:\w+)?\n([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+  .replace(/`([^`]+)`/g, '<code>$1</code>')
+  .replace(/^-{3,}$/gm, '<hr />')
+  .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+  .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+  .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+  .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+  .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+  .replace(/\*/gim, '<br />');
+}
+
 const ContextProvider = (props) => {
 
   const [input,setInput] =useState("");
@@ -28,6 +41,7 @@ const ContextProvider = (props) => {
     setResultData("")
     setLoading(true)
     setShowResult(true)
+
     let response;
     if (prompt !== undefined) {
       response = await runChat(prompt);
@@ -38,25 +52,13 @@ const ContextProvider = (props) => {
       response = await runChat(input)
     }
 
-    let responseArray = response.split("**");
-    let newResponse = "";
-    for (let i = 0; i < responseArray.length; i++)
-    {
-      if (i === 0 || i%2 !== 1) {
-        newResponse += responseArray[i];
-      } else {
-        newResponse += "<b>"+responseArray[i]+"</b>";
-      }
+    let formattedResponse = formatResponseText(response);
+    let wordsArray = formattedResponse.split(" ");
+    for (let i = 0; i < wordsArray.length; i++) {
+      const nextWord = wordsArray[i];
+      delayPara(i, nextWord + " ");
     }
 
-    let newResponse2 = newResponse.split("*").join("</br>")
-
-    let newResponseArray = newResponse2.split(" ");
-    for (let i = 0; i<newResponseArray.length; i++) 
-    {
-      const nextWord = newResponseArray[i];
-      delayPara(i,nextWord+ " ")
-    }
     setLoading(false)
     setInput("")
   

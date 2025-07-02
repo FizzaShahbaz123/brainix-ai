@@ -5,6 +5,8 @@ import { Context } from '../../context/context'
 
 const Main = () => {
 
+  const isDarkMode = document.body.classList.contains('dark-mode');
+
   const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
 
   return (
@@ -65,11 +67,27 @@ const Main = () => {
 
         <div className="main-bottom">
           <div className="search-box">
-            <input onChange={(e) => setInput(e.target.value)} type="text" placeholder='Enter a prompt here' />
+            <input
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onSent();
+                }
+              }}
+              value={input}
+              type="text"
+              placeholder="Enter a prompt here"
+            />
             <div>
-              <img src={assets.gallery_icon} alt="" />
-              <img src={assets.mic_icon} alt="" />
-              {input ? <img onClick={() => onSent()} src={assets.send_icon} alt="" /> : null}
+              <img src={isDarkMode ? assets.gallery_white : assets.gallery_icon} alt="" />
+              <img src={isDarkMode ? assets.mic_white : assets.mic_icon} alt="" />
+              {input && (
+                <img
+                  onClick={() => onSent()}
+                  src={isDarkMode ? assets.send_white : assets.send_icon}
+                  alt="send"
+                />
+              )}
             </div>
           </div>
           <p className="bottom-info">

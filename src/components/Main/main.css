@@ -208,6 +208,10 @@
   }
 }
 
+.search-box input {
+  transition: color 0.3s ease;
+}
+
 /* === DARK MODE === */
 body.dark-mode {
   background-color: #121212;
@@ -217,6 +221,10 @@ body.dark-mode {
 body.dark-mode .main .card,
 body.dark-mode .search-box {
   background-color: #2a2a2a !important;
+}
+
+body.dark-mode .search-box input {
+  color: white;
 }
 
 body.dark-mode .main .card:hover,
@@ -237,4 +245,26 @@ body,
 .new-chat,
 .recent-entry {
   transition: background-color 0.3s, color 0.3s;
+}
+
+code {
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+pre code {
+  display: block;
+  background-color: #1e1e1e;
+  color: #eee;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
 }

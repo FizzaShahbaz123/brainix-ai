@@ -214,14 +214,6 @@ body.dark-mode {
   color: #ffffff;
 }
 
-body.dark-mode .main,
-body.dark-mode .sidebar,
-body.dark-mode .new-chat,
-body.dark-mode .recent-entry {
-  background-color: #1e1e1e !important;
-  color: #ffffff !important;
-}
-
 body.dark-mode .main .card,
 body.dark-mode .search-box {
   background-color: #2a2a2a !important;

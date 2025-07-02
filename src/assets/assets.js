@@ -22,6 +22,7 @@ import mic_white from './mic_white.png'
 import msg_white from './msg_white.png'
 import question_white from './question_white.png'
 import send_white from './send_white.png'
+import white_plus_icon from './white_plus_icon.png'
 
 export const assets = {
     history_icon,
@@ -47,5 +48,6 @@ export const assets = {
     mic_white,
     msg_white,
     question_white,
-    send_white
+    send_white,
+    white_plus_icon
 }

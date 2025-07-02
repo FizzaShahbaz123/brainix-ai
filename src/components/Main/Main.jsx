@@ -1,11 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState} from 'react'
 import './main.css'
 import { assets } from '../../assets/assets'
 import { Context } from '../../context/context'
 
 const Main = () => {
 
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const isDarkMode = document.body.classList.contains('dark-mode');
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      console.log("File selected:", file.name);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
 
   const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
 
@@ -20,7 +35,7 @@ const Main = () => {
         {!showResult
           ? <>
             <div className="greet">
-              <p><span>Hello, Pal</span></p>
+              <p><span>Hello there!</span></p>
               <p>How can I help you today</p>
             </div>
             <div className="cards">
@@ -79,16 +94,48 @@ const Main = () => {
               placeholder="Enter a prompt here"
             />
             <div>
-              <img src={isDarkMode ? assets.gallery_white : assets.gallery_icon} alt="" />
-              <img src={isDarkMode ? assets.mic_white : assets.mic_icon} alt="" />
-              {input && (
+              <input
+                type="file"
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                onChange={handleFileSelect}
+              />
+
+              <img
+                src={isDarkMode ? assets.gallery_white : assets.gallery_icon}
+                alt="gallery"
+                onClick={triggerFileInput}
+                style={{ cursor: 'pointer' }}
+              />
+
+              <img
+                src={isDarkMode ? assets.mic_white : assets.mic_icon}
+                alt="mic"
+              />
+
+              {input || selectedFile ? (
                 <img
-                  onClick={() => onSent()}
+                  onClick={() => {
+                    onSent();
+                    if (selectedFile) {
+                      console.log("Sending file:", selectedFile.name);
+                      // You can upload file here
+                      setSelectedFile(null);
+                    }
+                  }}
                   src={isDarkMode ? assets.send_white : assets.send_icon}
                   alt="send"
+                  style={{ cursor: 'pointer' }}
                 />
-              )}
+              ) : null}
+
             </div>
+            {selectedFile && (
+              <p style={{ fontSize: '12px', color: isDarkMode ? 'white' : 'black', marginTop: '5px' }}>
+                Attached: {selectedFile.name}
+              </p>
+            )}
+
           </div>
           <p className="bottom-info">
             Brainix may display inaccurate info, including about people, so double-check its responses.

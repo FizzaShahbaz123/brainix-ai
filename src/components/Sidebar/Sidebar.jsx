@@ -3,9 +3,9 @@ import './sidebar.css';
 import { assets } from '../../assets/assets.js';
 import { Context } from '../../context/context.jsx';
 
-const Sidebar = (mobile) => {
+const Sidebar = ({ mobile = false }) => {
   const [extended, setExtended] = useState(false);
-  
+
   useEffect(() => {
     if (mobile) {
       setExtended(true);
@@ -43,7 +43,7 @@ const Sidebar = (mobile) => {
           <img
             onClick={() => setExtended(prev => !prev)}
             className="menu"
-            src={assets.menu_icon}
+            src={darkMode ? assets.menu_white_icon :  assets.menu_icon}
             alt="menu"
           />
         )}

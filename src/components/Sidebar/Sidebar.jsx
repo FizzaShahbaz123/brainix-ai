@@ -3,12 +3,19 @@ import './sidebar.css';
 import { assets } from '../../assets/assets.js';
 import { Context } from '../../context/context.jsx';
 
-const Sidebar = () => {
+const Sidebar = (mobile) => {
   const [extended, setExtended] = useState(false);
+  
+  useEffect(() => {
+    if (mobile) {
+      setExtended(true);
+    }
+  }, [mobile]);
+
   const [darkMode, setDarkMode] = useState(false);
   const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context);
 
-  // Load saved theme on mount
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -32,12 +39,14 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <img
-          onClick={() => setExtended(prev => !prev)}
-          className="menu"
-          src={darkMode ? assets.menu_white_icon : assets.menu_icon}
-          alt="menu"
-        />
+        {!mobile && (
+          <img
+            onClick={() => setExtended(prev => !prev)}
+            className="menu"
+            src={assets.menu_icon}
+            alt="menu"
+          />
+        )}
         <div onClick={newChat} className="new-chat">
           <img src={darkMode ? assets.white_plus_icon : assets.plus_icon} alt="plus" />
           {extended ? <p>New Chat</p> : null}

@@ -183,31 +183,6 @@
   line-height: 1.8;
 }
 
-@media (max-width:600px) {
-  .main-bottom input{
-    flex:none;
-    width:150px;
-  }
-  .main-bottom img{
-    width:20px;
-  }
-  .search-box{
-    padding: 5px 10px;
-  }
-  .search-box div{
-    gap:5px;
-  }
-}
-
-@media (max-width:450px) {
-  .cards{
-    display: none;
-  }
-  .card{
-    display: none;
-  }
-}
-
 .search-box input {
   transition: color 0.3s ease;
 }
@@ -267,4 +242,94 @@ hr {
   border: none;
   border-top: 1px solid #ccc;
   margin: 20px 0;
+}
+
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px; /* same as your regular sidebar */
+  z-index: 999;
+  background-color: var(--sidebar-bg); /* dynamic based on theme */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+:root {
+  --sidebar-bg: #f0f4f9;
+}
+
+body.dark-mode {
+  --sidebar-bg: #1e1e1e;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.mobile-sidebar {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.profile-icon {
+  display: block;
+}
+
+.mobile-menu-icon {
+  display: none;
+  width: 28px;
+  cursor: pointer;
+}
+
+@media (max-width:600px) {
+  .main-bottom input{
+    flex:none;
+    width:150px;
+  }
+  .main-bottom img{
+    width:20px;
+  }
+  .search-box{
+    padding: 5px 10px;
+  }
+  .search-box div{
+    gap:5px;
+  }
+    .profile-icon {
+    display: none;
+  }
+
+  .mobile-menu-icon {
+    display: block;
+  }
+  .main .greet{
+    padding-left:26px;
+  }
+}
+
+@media (max-width:450px) {
+  .cards{
+    display: none;
+  }
+  .card{
+    display: none;
+  }
 }

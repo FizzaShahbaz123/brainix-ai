@@ -1,42 +1,55 @@
-import React, { useContext, useRef, useState} from 'react'
-import './main.css'
-import { assets } from '../../assets/assets'
-import { Context } from '../../context/context'
+import React, { useContext, useState } from 'react';
+import './main.css';
+import { assets } from '../../assets/assets';
+import { Context } from '../../context/context';
+import Sidebar from '../Sidebar/Sidebar'; 
 
 const Main = () => {
+  const {
+    onSent,
+    recentPrompt,
+    showResult,
+    loading,
+    resultData,
+    setInput,
+    input,
+  } = useContext(Context);
 
-  const fileInputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDarkMode = document.body.classList.contains('dark-mode');
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      console.log("File selected:", file.name);
-    }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
-  };
-
-  const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
 
   return (
     <div className='main'>
+      {mobileMenuOpen && (
+        <div className="mobile-sidebar">
+          <Sidebar mobile={true}/>
+          <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>×</button>
+        </div>
+      )}
+
       <div className="nav">
         <p className='app-logo'>Brainix</p>
-        <img src={assets.user_icon} alt="" />
-      </div>
-      <div className="main-container">
 
-        {!showResult
-          ? <>
+        <img
+          src={isDarkMode ? assets.menu_white_icon : assets.menu_icon}
+          className="mobile-menu-icon"
+          alt="menu"
+          onClick={() => setMobileMenuOpen(true)}
+        />
+
+        <img
+          src={assets.user_icon}
+          className="profile-icon"
+          alt="profile"
+        />
+      </div>
+
+      <div className="main-container">
+        {!showResult ? (
+          <>
             <div className="greet">
-              <p><span>Hello there!</span></p>
-              <p>How can I help you today</p>
+              <p><span>Hello there !</span></p>
+              <p>How can I help you today?</p>
             </div>
             <div className="cards">
               <div className="card">
@@ -57,85 +70,57 @@ const Main = () => {
               </div>
             </div>
           </>
-          : <div className='result'>
+        ) : (
+          <div className='result'>
             <div className="result-title">
               <img src={assets.user_icon} alt="" />
               <p>{recentPrompt}</p>
             </div>
             <div className="result-data">
               <img src={assets.bubble_icon} alt="" />
-              {loading
-                ? <div className='loader'>
-                  <hr />
-                  <hr />
-                  <hr />
+              {loading ? (
+                <div className='loader'>
+                  <hr /><hr /><hr />
                 </div>
-                : <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
-              }
-
+              ) : (
+                <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
+              )}
             </div>
           </div>
-
-        }
-
-
+        )}
 
         <div className="main-bottom">
           <div className="search-box">
             <input
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSent();
-                }
-              }}
-              value={input}
+              onKeyDown={(e) => e.key === "Enter" && onSent()}
               type="text"
+              value={input}
               placeholder="Enter a prompt here"
             />
             <div>
               <input
                 type="file"
                 style={{ display: 'none' }}
-                ref={fileInputRef}
-                onChange={handleFileSelect}
+                id="fileInput"
               />
-
               <img
                 src={isDarkMode ? assets.gallery_white : assets.gallery_icon}
                 alt="gallery"
-                onClick={triggerFileInput}
-                style={{ cursor: 'pointer' }}
+                onClick={() => document.getElementById('fileInput').click()}
               />
-
               <img
                 src={isDarkMode ? assets.mic_white : assets.mic_icon}
                 alt="mic"
               />
-
-              {input || selectedFile ? (
+              {input && (
                 <img
-                  onClick={() => {
-                    onSent();
-                    if (selectedFile) {
-                      console.log("Sending file:", selectedFile.name);
-                      // You can upload file here
-                      setSelectedFile(null);
-                    }
-                  }}
                   src={isDarkMode ? assets.send_white : assets.send_icon}
                   alt="send"
-                  style={{ cursor: 'pointer' }}
+                  onClick={onSent}
                 />
-              ) : null}
-
+              )}
             </div>
-            {selectedFile && (
-              <p style={{ fontSize: '12px', color: isDarkMode ? 'white' : 'black', marginTop: '5px' }}>
-                Attached: {selectedFile.name}
-              </p>
-            )}
-
           </div>
           <p className="bottom-info">
             Brainix may display inaccurate info, including about people, so double-check its responses.
@@ -143,7 +128,7 @@ const Main = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

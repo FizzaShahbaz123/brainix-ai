@@ -18,3 +18,9 @@
     opacity: 1;
   }
 }
+
+@media (max-width:600px) {
+  .desktop-sidebar{
+    display:none;
+  }
+}
